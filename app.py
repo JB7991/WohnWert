@@ -1,5 +1,4 @@
 # WertWohn – Schweizer Immobilienpreisschätzer (Hauptdatei)
-import threading
 import numpy as np
 import streamlit as st
 import pandas as pd
@@ -20,12 +19,7 @@ if "gestartet" not in st.session_state:
     database.initialisieren()           # Datenbank und Beispieldaten aufsetzen
     ml_model.alle_trainieren()          # Random-Forest-Modelle trainieren
     # Koordinaten im Hintergrund über Nominatim API aktualisieren
-    thread = threading.Thread(
-        target=data_fetcher.koordinaten_alle_aktualisieren,
-        args=(STADTLISTE,),
-        daemon=True,
-    )
-    thread.start()
+    data_fetcher.koordinaten_alle_aktualisieren(STADTLISTE)
     st.session_state["gestartet"] = True
 
 # ── Daten mit Cache laden ─────────────────────────────────────────────────────
@@ -46,22 +40,6 @@ def stadtdaten_holen():
 
 def seite_preisschaetzung():
     st.header("Immobilienpreise schätzen")
-
-    # Problemstellung: Warum ist eine Schätzung in der Schweiz schwierig?
-    with st.expander("ℹ️ Warum ist eine Preiseinschätzung in der Schweiz so schwierig?", expanded=False):
-        st.markdown("""
-**Das Problem:** Immobilienpreise in der Schweiz variieren extrem – eine 3-Zimmer-Wohnung
-kostet in Zug dreimal so viel wie in Biel. Kantone, Steuerbelastung, Mikrolage, Baujahr
-und Ausstattung beeinflussen den Preis gleichzeitig. Ohne Marktdaten und statistische
-Modelle ist es für Privatpersonen kaum möglich, einen fairen Wert einzuschätzen –
-Maklerangebote sind oft teuer, und Vergleichsportale zeigen nur Angebotspreise, keine realen Abschlüsse.
-
-**Die Lösung:** WertWohn analysiert Schweizer Marktdaten mit einem Machine-Learning-Modell
-(Random Forest) und liefert in Sekunden eine realistische Preiseinschätzung – für Kauf
-und Miete, kostenlos und ohne Anmeldung.
-        """)
-
-    st.markdown("---")
 
     # ── Suche und Preistyp ────────────────────────────────────────────────────
     col_suche, col_typ = st.columns([2, 1])
