@@ -80,16 +80,20 @@ def seite_preisschaetzung():
         berechnen = st.button("Preis schätzen", type="primary", use_container_width=True)
 
     # ── Ergebnis anzeigen ─────────────────────────────────────────────────────
+    # ── Ergebnis anzeigen ─────────────────────────────────────────────────────
     typ_intern = "kauf" if typ_wahl == "Kaufpreis" else "miete"
-    preis = 0
 
     if berechnen:
         preis = ml_model.schaetzen(stadt, flaeche, zimmer, stockwerk, parkplatz, baujahr, typ_intern)
         st.session_state["letzter_preis"] = preis
-
-    if "letzter_preis" in st.session_state:
+    elif "letzter_preis" in st.session_state:
         preis = st.session_state["letzter_preis"]
-        st.markdown("---")
+    else:
+        preis = None
+
+    st.markdown("---")
+
+    if preis is not None:
         st.markdown(f"### Geschätzter {typ_bezeichnung(typ_intern)}")
 
         col_l, col_m, col_r = st.columns([1, 2, 1])
@@ -109,7 +113,8 @@ def seite_preisschaetzung():
         st.info(f"Schweizer Durchschnitt: {chf(schweizer_schnitt)}")
 
         eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
-        st.markdown(f"**Preis in anderen Währungen:** € {float(preis) * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD")
+        st.markdown(f"**Preis in anderen Währungen:** € {float(preis) * eur_kurs:,.0f} EUR | $ {float(preis) * usd_kurs:,.0f} USD")
+        st.caption("Wechselkurs: frankfurter.app · Live")
     else:
         st.info("Bitte Angaben eingeben und auf 'Preis schätzen' klicken.")
 
