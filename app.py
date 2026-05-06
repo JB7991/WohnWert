@@ -233,6 +233,7 @@ def seite_immobilien():
         "zimmer": "Zimmer", "stockwerk": "Stockwerk", "parkplatz": "Parkplatz",
         "baujahr": "Baujahr", "preis": "Preis (CHF)", "typ": "Typ",
     }).drop(columns=["id"], errors="ignore")
+    anzeige.insert(0, "Nr.", range(1, len(anzeige) + 1))
     anzeige["Typ"] = anzeige["Typ"].map({"kauf": "Kauf", "miete": "Miete"})
     anzeige["Parkplatz"] = anzeige["Parkplatz"].map({1: "Ja", 0: "Nein"})
 
@@ -240,10 +241,10 @@ def seite_immobilien():
 
     # Lösch-Buttons pro Zeile
     st.markdown("---")
-    for _, zeile in anzeige_daten.iterrows():
+    for nr, (_, zeile) in enumerate(anzeige_daten.iterrows(), start=1):
         col1, col2 = st.columns([8, 1])
         with col1:
-            st.write(f"{zeile['stadt']} | {zeile['flaeche']} m² | {zeile['zimmer']} Zi. | {zeile['baujahr']} | CHF {zeile['preis']:,.0f}")
+            st.write(f"#{nr} | {zeile['stadt']} | {zeile['flaeche']} m² | {zeile['zimmer']} Zi. | {zeile['baujahr']} | CHF {zeile['preis']:,.0f}")
         with col2:
             if st.button("🗑️", key=f"loeschen_{zeile['id']}"):
                 conn = database.verbindung()
