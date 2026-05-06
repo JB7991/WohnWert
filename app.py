@@ -126,7 +126,8 @@ def seite_preisschaetzung():
     # Wechselkurs anzeigen
     # ── Wechselkurs ──────────────────────────────────────────────────────────
     eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
-    st.markdown(f"**Preis in anderen Währungen:** € {preis * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD") 
+    preis_float = float(preis)
+    st.markdown(f"**Preis in anderen Währungen:** € {preis_float * eur_kurs:,.0f} EUR | $ {preis_float * usd_kurs:,.0f} USD")
 
 # ── Seite 2: Marktübersicht ───────────────────────────────────────────────────
 
