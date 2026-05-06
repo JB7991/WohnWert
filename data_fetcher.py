@@ -1,5 +1,6 @@
 # Wechselkurs API: Aktuelle EUR und USD Kurse für CHF laden
 import requests
+import pandas as pd
 
 def wechselkurs_holen():
     # Aktuellen Wechselkurs von frankfurter.app API laden
