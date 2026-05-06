@@ -246,6 +246,19 @@ def seite_immobilien():
         file_name="wertwohn_immobilien.csv",
         mime="text/csv",
     )
+    # Einzelnen Eintrag löschen
+    st.markdown("---")
+    st.subheader("Eintrag löschen")
+    alle_ids = anzeige_daten["id"].tolist()
+    zu_loeschen = st.selectbox("Eintrag-ID auswählen", alle_ids)
+    if st.button("Ausgewählten Eintrag löschen"):
+        conn = database.verbindung()
+        conn.execute("DELETE FROM immobilien WHERE id=?", (zu_loeschen,))
+        conn.commit()
+        conn.close()
+        st.cache_data.clear()
+        st.success("Eintrag gelöscht!")
+        st.rerun()
 
 # ── Navigation ────────────────────────────────────────────────────────────────
 
