@@ -80,7 +80,6 @@ def seite_preisschaetzung():
         berechnen = st.button("Preis schätzen", type="primary", use_container_width=True)
 
     # ── Ergebnis anzeigen ─────────────────────────────────────────────────────
-    # ── Ergebnis anzeigen ─────────────────────────────────────────────────────
     typ_intern = "kauf" if typ_wahl == "Kaufpreis" else "miete"
 
     if berechnen:
@@ -117,17 +116,6 @@ def seite_preisschaetzung():
         st.caption("Wechselkurs: frankfurter.app · Live")
     else:
         st.info("Bitte Angaben eingeben und auf 'Preis schätzen' klicken.")
-
-    # Gauge: Preisvergleich zum Schweizer Durchschnitt
-    daten = daten_holen(typ_intern)
-    schweizer_schnitt = daten["preis"].mean()
-    st.info(f"Schweizer Durchschnitt: {chf(schweizer_schnitt)}")
-    
-    # Wechselkurs anzeigen
-    # ── Wechselkurs ──────────────────────────────────────────────────────────
-    eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
-    preis_float = float(preis)
-    st.markdown(f"**Preis in anderen Währungen:** € {preis_float * eur_kurs:,.0f} EUR | $ {preis_float * usd_kurs:,.0f} USD")
 
 # ── Seite 2: Marktübersicht ───────────────────────────────────────────────────
 
