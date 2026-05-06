@@ -93,7 +93,7 @@ def _beispieldaten_erstellen(conn):
             # Mietpreis: analog berechnet
             m = _MIETE[stadt] * (f / 80) * (1 - alter * 0.001) * (1 + p * 0.04)
             m *= random.uniform(0.9, 1.1)
-            c.execute("INSERT INTO immobilien VALUES (NULL,?,?,?,?,?,?,?,?,?)",
+            c.execute("INSERT INTO marktdaten VALUES (NULL,?,?,?,?,?,?,?,?,?)",
                       (stadt, info["kanton"], f, z, s, p, b, round(m, -1), "miete"))
     conn.commit()
 
