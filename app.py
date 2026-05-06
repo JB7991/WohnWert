@@ -81,6 +81,7 @@ def seite_preisschaetzung():
 
     # ── Ergebnis anzeigen ─────────────────────────────────────────────────────
     typ_intern = "kauf" if typ_wahl == "Kaufpreis" else "miete"
+    preis = 0
 
     if berechnen:
         preis = ml_model.schaetzen(stadt, flaeche, zimmer, stockwerk, parkplatz, baujahr, typ_intern)
