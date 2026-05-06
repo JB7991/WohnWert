@@ -45,7 +45,16 @@ def marktdaten_holen(typ):
 # ── Seite 1: Preisschätzung ───────────────────────────────────────────────────
 
 def seite_preisschaetzung():
-    st.header("Immobilienpreise schätzen")
+    st.title("🏠 WertWohn")
+    st.markdown("### Schweizer Immobilienpreise einfach schätzen")
+    st.markdown("Gib deine Immobiliendaten ein und erhalte in Sekunden eine realistische Preisschätzung – für Kauf und Miete, kostenlos und ohne Anmeldung.")
+    
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Städte", "10 Schweizer Städte")
+    col2.metric("Modell", "Random Forest ML")
+    col3.metric("Währungen", "CHF · EUR · USD")
+    
+    st.markdown("---")
 
     # ── Suche und Preistyp ────────────────────────────────────────────────────
     col_suche, col_typ = st.columns([2, 1])
