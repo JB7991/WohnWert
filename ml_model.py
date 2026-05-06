@@ -1,4 +1,5 @@
 # Machine Learning Modell: Preisschätzung mit Random Forest
+from datetime import datetime
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import LabelEncoder
@@ -20,7 +21,7 @@ def _features_erstellen(daten):
     _encoder_initialisieren(daten)
     df = daten.copy()
     df["stadt_nr"] = _encoder.transform(df["stadt"].values)
-    df["alter"] = 2024 - df["baujahr"]
+    df["alter"] = datetime.now().year - df["baujahr"]
     # Features: Stadt (codiert), Fläche, Zimmer, Stockwerk, Parkplatz, Gebäudealter
     return df[["stadt_nr", "flaeche", "zimmer", "stockwerk", "parkplatz", "alter"]]
 
@@ -53,7 +54,7 @@ def schaetzen(stadt, flaeche, zimmer, stockwerk, parkplatz, baujahr, typ):
         stadt_nr = _encoder.transform([stadt])[0]
     except Exception:
         stadt_nr = 0
-    alter = 2024 - baujahr
+    alter = datetime.now().year - baujahr
     X = np.array([[stadt_nr, flaeche, zimmer, stockwerk, int(parkplatz), alter]])
     preis = _modelle[typ].predict(X)[0]
     # Kaufpreise auf CHF 1'000, Mieten auf CHF 10 runden
