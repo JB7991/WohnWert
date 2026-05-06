@@ -238,27 +238,21 @@ def seite_immobilien():
 
     st.dataframe(anzeige, use_container_width=True, hide_index=True)
 
-    # CSV-Export
-    csv_daten = anzeige_daten.to_csv(index=False).encode("utf-8")
-    st.download_button(
-        "Als CSV exportieren",
-        data=csv_daten,
-        file_name="wertwohn_immobilien.csv",
-        mime="text/csv",
-    )
-    # Einzelnen Eintrag löschen
+    # Lösch-Buttons pro Zeile
     st.markdown("---")
-    st.subheader("Eintrag löschen")
-    alle_ids = anzeige_daten["id"].tolist()
-    zu_loeschen = st.selectbox("Eintrag-ID auswählen", alle_ids)
-    if st.button("Ausgewählten Eintrag löschen"):
-        conn = database.verbindung()
-        conn.execute("DELETE FROM immobilien WHERE id=?", (zu_loeschen,))
-        conn.commit()
-        conn.close()
-        st.cache_data.clear()
-        st.success("Eintrag gelöscht!")
-        st.rerun()
+    for _, zeile in anzeige_daten.iterrows():
+        col1, col2 = st.columns([8, 1])
+        with col1:
+            st.write(f"{zeile['stadt']} | {zeile['flaeche']} m² | {zeile['zimmer']} Zi. | {zeile['baujahr']} | CHF {zeile['preis']:,.0f}")
+        with col2:
+            if st.button("🗑️", key=f"loeschen_{zeile['id']}"):
+                conn = database.verbindung()
+                conn.execute("DELETE FROM immobilien WHERE id=?", (zeile['id'],))
+                conn.commit()
+                conn.close()
+                st.cache_data.clear()
+                st.rerun()
+   
 
 # ── Navigation ────────────────────────────────────────────────────────────────
 
