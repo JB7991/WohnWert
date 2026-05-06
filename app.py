@@ -65,7 +65,7 @@ Preisschätzung – für Kauf und Miete, kostenlos und ohne Anmeldung.
     # ── Suche und Preistyp ────────────────────────────────────────────────────
     col_suche, col_typ = st.columns([2, 1])
     with col_suche:
-        eingabe = st.text_input("🔍 PLZ oder Stadtname eingeben", placeholder="z. B. 8001 oder Zürich")
+        eingabe = st.text_input("🔍 PLZ oder Stadtname eingeben", placeholder="z. B. 8000 oder Zürich")
     with col_typ:
         typ_wahl = st.radio("Preistyp", ["Kaufpreis", "Mietpreis"], horizontal=True)
 
