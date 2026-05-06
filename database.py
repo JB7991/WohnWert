@@ -53,10 +53,15 @@ def initialisieren():
     """)
     conn.commit()
 
+    # Immobilien Tabelle leeren
+    c.execute("DELETE FROM immobilien")
+    conn.commit()
+
     # Marktdaten erstellen falls leer
     if c.execute("SELECT COUNT(*) FROM marktdaten").fetchone()[0] == 0:
         _beispieldaten_erstellen(conn)
     conn.close()
+
 
 
 # Basis-Kaufpreise und Mietpreise pro Stadt (synthetische Marktdaten)
