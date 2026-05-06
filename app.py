@@ -16,9 +16,11 @@ st.set_page_config(page_title=APP_NAME, page_icon="🏠", layout="wide")
 
 # ── Initialisierung beim ersten Start ─────────────────────────────────────────
 
-database.initialisieren()
-ml_model.alle_trainieren()
-st.cache_data.clear()
+if "gestartet" not in st.session_state:
+    database.initialisieren()
+    ml_model.alle_trainieren()
+    st.session_state["gestartet"] = True
+    st.cache_data.clear()
 
 # ── Daten mit Cache laden ─────────────────────────────────────────────────────
 
