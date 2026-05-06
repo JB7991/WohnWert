@@ -43,8 +43,9 @@ def initialisieren():
     conn.commit()
 
     # Beispieldaten erstellen falls die Tabelle leer ist
-    if c.execute("SELECT COUNT(*) FROM immobilien").fetchone()[0] == 0:
-        _beispieldaten_erstellen(conn)
+    c.execute("DELETE FROM immobilien")
+    conn.commit()
+    _beispieldaten_erstellen(conn)
     conn.close()
 
 # Basis-Kaufpreise und Mietpreise pro Stadt (synthetische Marktdaten)
