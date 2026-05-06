@@ -87,7 +87,7 @@ Preisschätzung – für Kauf und Miete, kostenlos und ohne Anmeldung.
         flaeche = st.slider("Wohnfläche (m²)", 25, 300, 85)
     with col_b:
         stockwerk = st.slider("Stockwerk", 0, 15, 2)
-        baujahr = st.slider("Baujahr", 1900, 2024, 2000)
+        baujahr = st.slider("Baujahr", 1900, 2026, 2000)
     with col_c:
         parkplatz = st.checkbox("Parkplatz vorhanden", value=False)
         st.write("")
@@ -223,7 +223,7 @@ def seite_immobilien():
             zimmer = st.select_slider("Zimmer", [1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0], value=3.0)
         with col2:
             stockwerk = st.number_input("Stockwerk", min_value=0, max_value=30, value=2)
-            baujahr = st.number_input("Baujahr", min_value=1850, max_value=2024, value=2000)
+            baujahr = st.number_input("Baujahr", min_value=1850, max_value=2026, value=2000)
             parkplatz = st.checkbox("Parkplatz vorhanden")
         with col3:
             typ_eingabe = st.radio("Preistyp", ["Kaufpreis", "Mietpreis"])
