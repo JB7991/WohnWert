@@ -3,7 +3,6 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 
 import database
 import ml_model
@@ -98,27 +97,7 @@ def seite_preisschaetzung():
     # Gauge: Preisvergleich zum Schweizer Durchschnitt
     daten = daten_holen(typ_intern)
     schweizer_schnitt = daten["preis"].mean()
-    gauge_max = max(preis, schweizer_schnitt) * 1.6
-
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number+delta",
-        value=preis,
-        number={"prefix": "CHF ", "valueformat": ",.0f"},
-        delta={"reference": schweizer_schnitt, "relative": True, "valueformat": ".1%"},
-        title={"text": "Vergleich zum Schweizer Durchschnitt"},
-        gauge={
-            "axis": {"range": [0, gauge_max], "tickformat": ",.0f"},
-            "bar": {"color": "#2e7d32"},
-            "steps": [
-                {"range": [0, schweizer_schnitt * 0.9], "color": "#e8f5e9"},
-                {"range": [schweizer_schnitt * 0.9, schweizer_schnitt * 1.1], "color": "#a5d6a7"},
-                {"range": [schweizer_schnitt * 1.1, gauge_max], "color": "#66bb6a"},
-            ],
-            "threshold": {"line": {"color": "#1b5e20", "width": 3}, "value": schweizer_schnitt},
-        },
-    ))
-    fig.update_layout(height=300, margin={"l": 20, "r": 20, "t": 40, "b": 10})
-    st.plotly_chart(fig, use_container_width=True)
+    st.info(f"Schweizer Durchschnitt: {chf(schweizer_schnitt)}")
 
 # ── Seite 2: Marktübersicht ───────────────────────────────────────────────────
 
