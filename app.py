@@ -108,7 +108,7 @@ def seite_preisschaetzung():
         st.info(f"Schweizer Durchschnitt: {chf(schweizer_schnitt)}")
 
         eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
-        st.markdown(f"**Preis in anderen Währungen:** € {preis * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD")
+        st.markdown(f"**Preis in anderen Währungen:** € {float(preis) * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD")
     else:
         st.info("Bitte Angaben eingeben und auf 'Preis schätzen' klicken.")
 
