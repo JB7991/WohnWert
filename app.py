@@ -81,25 +81,36 @@ def seite_preisschaetzung():
 
     # ── Ergebnis anzeigen ─────────────────────────────────────────────────────
     typ_intern = "kauf" if typ_wahl == "Kaufpreis" else "miete"
-    preis = ml_model.schaetzen(stadt, flaeche, zimmer, stockwerk, parkplatz, baujahr, typ_intern)
 
     if berechnen:
+        preis = ml_model.schaetzen(stadt, flaeche, zimmer, stockwerk, parkplatz, baujahr, typ_intern)
         st.session_state["letzter_preis"] = preis
 
-    st.markdown("---")
-    st.markdown(f"### Geschätzter {typ_bezeichnung(typ_intern)}")
+    if "letzter_preis" in st.session_state:
+        preis = st.session_state["letzter_preis"]
+        st.markdown("---")
+        st.markdown(f"### Geschätzter {typ_bezeichnung(typ_intern)}")
 
-    col_l, col_m, col_r = st.columns([1, 2, 1])
-    with col_m:
-        st.metric(
-            label=f"{zimmer}-Zimmer-Wohnung, {flaeche} m² in {stadt}",
-            value=chf(preis),
-        )
-        if typ_intern == "kauf":
-            preis_m2 = preis / flaeche
-            st.caption(f"ca. {chf(preis_m2)} pro m²")
-        else:
-            st.caption(f"ca. {chf(preis * 12)} pro Jahr")
+        col_l, col_m, col_r = st.columns([1, 2, 1])
+        with col_m:
+            st.metric(
+                label=f"{zimmer}-Zimmer-Wohnung, {flaeche} m² in {stadt}",
+                value=chf(preis),
+            )
+            if typ_intern == "kauf":
+                preis_m2 = preis / flaeche
+                st.caption(f"ca. {chf(preis_m2)} pro m²")
+            else:
+                st.caption(f"ca. {chf(preis * 12)} pro Jahr")
+
+        daten = daten_holen(typ_intern)
+        schweizer_schnitt = daten["preis"].mean()
+        st.info(f"Schweizer Durchschnitt: {chf(schweizer_schnitt)}")
+
+        eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
+        st.markdown(f"**Preis in anderen Währungen:** € {preis * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD")
+    else:
+        st.info("Bitte Angaben eingeben und auf 'Preis schätzen' klicken.")
 
     # Gauge: Preisvergleich zum Schweizer Durchschnitt
     daten = daten_holen(typ_intern)
