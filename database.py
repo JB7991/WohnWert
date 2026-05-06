@@ -65,7 +65,7 @@ def _beispieldaten_erstellen(conn):
     random.seed(42)
     c = conn.cursor()
     for stadt, info in STAEDTE.items():
-        for _ in range(15):
+        for _ in range(3):
             z = random.choice([1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0])
             f = round(max(25, z * 22 + random.gauss(0, 12)), 1)
             s = random.randint(0, 8)
