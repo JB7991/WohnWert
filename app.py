@@ -18,7 +18,6 @@ if "gestartet" not in st.session_state:
     database.initialisieren()           # Datenbank und Beispieldaten aufsetzen
     ml_model.alle_trainieren()          # Random-Forest-Modelle trainieren
     # Koordinaten im Hintergrund über Nominatim API aktualisieren
-    data_fetcher.koordinaten_alle_aktualisieren(STADTLISTE)
     st.session_state["gestartet"] = True
 
 # ── Daten mit Cache laden ─────────────────────────────────────────────────────
@@ -98,6 +97,12 @@ def seite_preisschaetzung():
     daten = daten_holen(typ_intern)
     schweizer_schnitt = daten["preis"].mean()
     st.info(f"Schweizer Durchschnitt: {chf(schweizer_schnitt)}")
+    
+    # Wechselkurs anzeigen
+    eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
+    st.markdown(f"**Preis in anderen Währungen:** € {preis * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD")
+
+
 
 # ── Seite 2: Marktübersicht ───────────────────────────────────────────────────
 
