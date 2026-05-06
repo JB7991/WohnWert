@@ -163,7 +163,7 @@ def seite_markt():
         hover_name="stadt",
         hover_data={"kanton": True, "durchschnitt": ":,.0f", "anzahl": True, "lat": False, "lon": False, "groesse": False},
         color_continuous_scale=[[0, "#1a7a4a"], [0.5, "#f4a261"], [1, "#d62828"]],
-        zoom=6.5, height=430, size_max=30,
+        zoom=6.5, height=430, size_max=40,
         labels={"durchschnitt": f"Ø {einheit}", "anzahl": "Inserate"},
     )
     karte.update_layout(mapbox_style="open-street-map", margin={"l": 0, "r": 0, "t": 0, "b": 0})
