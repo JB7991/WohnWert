@@ -51,14 +51,12 @@ def initialisieren():
 _KAUF = {
     "Zürich": 1200000, "Genf": 1100000, "Zug": 1350000, "Basel": 920000,
     "Lausanne": 960000, "Bern": 850000, "Winterthur": 780000, "Luzern": 810000,
-    "St. Gallen": 680000, "Lugano": 720000, "Biel/Bienne": 580000, "Thun": 620000,
-    "La Chaux-de-Fonds": 520000, "Schaffhausen": 660000, "Chur": 640000,
+    "St. Gallen": 680000, "Lugano": 720000,
 }
 _MIETE = {
     "Zürich": 2600, "Genf": 2500, "Zug": 2900, "Basel": 2000, "Lausanne": 2200,
     "Bern": 1900, "Winterthur": 1700, "Luzern": 1800, "St. Gallen": 1500,
-    "Lugano": 1600, "Biel/Bienne": 1300, "Thun": 1400,
-    "La Chaux-de-Fonds": 1200, "Schaffhausen": 1450, "Chur": 1400,
+    "Lugano": 1600,
 }
 
 def _beispieldaten_erstellen(conn):
