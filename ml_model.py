@@ -28,7 +28,7 @@ def _features_erstellen(daten):
 def trainieren(typ):
     # Random Forest für Kauf- oder Mietpreise trainieren und speichern
     global _modelle
-    daten = database.laden(typ=typ)
+    daten = database.marktdaten_laden(typ=typ)
     if len(daten) < 10:
         return
     X = _features_erstellen(daten)
