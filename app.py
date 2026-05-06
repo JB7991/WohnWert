@@ -153,9 +153,10 @@ def seite_markt():
 
     # ── Karte der Schweiz ─────────────────────────────────────────────────────
     st.subheader("Preiskarte Schweiz")
-    agg["groesse"] = 10
+    agg_karte = agg.copy()
+    agg_karte["groesse"] = 10
     karte = px.scatter_mapbox(
-        agg,
+        agg_karte,
         lat="lat", lon="lon",
         size="groesse",
         color="durchschnitt",
