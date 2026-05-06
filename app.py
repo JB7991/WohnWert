@@ -36,6 +36,11 @@ def alle_daten_holen():
 def stadtdaten_holen():
     return database.stadtdaten_laden()
 
+@st.cache_data
+def marktdaten_holen(typ):
+    # Marktdaten für die Marktübersicht laden
+    return database.marktdaten_laden(typ=typ)
+
 
 # ── Seite 1: Preisschätzung ───────────────────────────────────────────────────
 
@@ -115,7 +120,7 @@ def seite_markt():
     typ_intern = "kauf" if typ_wahl == "Kaufpreise" else "miete"
     einheit = "CHF" if typ_intern == "kauf" else "CHF/Mt."
 
-    daten = daten_holen(typ_intern)
+    daten = marktdaten_holen(typ_intern)
     stadtdaten = stadtdaten_holen()
 
     # Stadtdurchschnitte für Karte und Balkendiagramm
