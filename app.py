@@ -162,7 +162,7 @@ def seite_markt():
         color="durchschnitt",
         hover_name="stadt",
         hover_data={"kanton": True, "durchschnitt": ":,.0f", "anzahl": True, "lat": False, "lon": False, "groesse": False},
-        color_continuous_scale="RdYlGn_r",
+        color_continuous_scale="RdBu_r",
         zoom=6.5, height=430, size_max=15,
         labels={"durchschnitt": f"Ø {einheit}", "anzahl": "Inserate"},
     )
