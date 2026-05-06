@@ -36,9 +36,6 @@ def alle_daten_holen():
 def stadtdaten_holen():
     return database.stadtdaten_laden()
 
-@st.cache_data(ttl=3600)   # 1 Stunde cachen — SNB aktualisiert nicht öfter
-def zinsen_holen():
-    return data_fetcher.hypothekarzinsen_holen()
 
 # ── Seite 1: Preisschätzung ───────────────────────────────────────────────────
 
@@ -107,40 +104,7 @@ def seite_preisschaetzung():
     # Wechselkurs anzeigen
     # ── Wechselkurs ──────────────────────────────────────────────────────────
     eur_kurs, usd_kurs = data_fetcher.wechselkurs_holen()
-    st.markdown(f"**Preis in anderen Währungen:** € {preis * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD")
-
-    # ── SNB Hypothekarzinsen ──────────────────────────────────────────────────
-    st.markdown("---")
-    st.markdown("#### 📈 Aktuelle SNB Hypothekarzinsen")
-    zinsen = zinsen_holen()
-    if zinsen is not None and not zinsen.empty:
-        col_z1, col_z2 = st.columns([1, 2])
-        with col_z1:
-            # Tabelle mit aktuellen Zinssätzen
-            anzeige = zinsen[["bezeichnung", "wert"]].copy()
-            anzeige.columns = ["Produkt", "Zinssatz (%)"]
-            anzeige["Zinssatz (%)"] = anzeige["Zinssatz (%)"].map(lambda x: f"{x:.2f}%")
-            st.dataframe(anzeige, hide_index=True, use_container_width=True)
-        with col_z2:
-            # Balkendiagramm der Zinssätze
-            balken_zinsen = px.bar(
-                zinsen, x="bezeichnung", y="wert",
-                color="wert", color_continuous_scale="Blues",
-                labels={"bezeichnung": "Produkt", "wert": "Zinssatz (%)"},
-                text=zinsen["wert"].map(lambda x: f"{x:.2f}%"),
-            )
-            balken_zinsen.update_layout(
-                showlegend=False, coloraxis_showscale=False,
-                margin={"t": 10, "b": 10}
-            )
-            balken_zinsen.update_traces(textposition="outside")
-            st.plotly_chart(balken_zinsen, use_container_width=True)
-        # Datum des letzten SNB-Updates anzeigen
-        letztes_datum = zinsen["datum"].dropna()
-        if not letztes_datum.empty:
-            st.caption(f"Quelle: SNB Datenportal · Stand: {letztes_datum.max().strftime('%B %Y')}")
-    
-    
+    st.markdown(f"**Preis in anderen Währungen:** € {preis * eur_kurs:,.0f} EUR | $ {preis * usd_kurs:,.0f} USD") 
 
 # ── Seite 2: Marktübersicht ───────────────────────────────────────────────────
 
