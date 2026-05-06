@@ -117,9 +117,4 @@ def einfuegen(stadt, flaeche, zimmer, stockwerk, parkplatz, baujahr, preis, typ)
     conn.commit()
     conn.close()
 
-def koordinaten_aktualisieren(stadt, lat, lon):
-    # Koordinaten nach API-Abruf in die Datenbank schreiben
-    conn = verbindung()
-    conn.execute("UPDATE stadtdaten SET lat=?, lon=? WHERE stadt=?", (lat, lon, stadt))
-    conn.commit()
-    conn.close()
+
