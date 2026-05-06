@@ -179,7 +179,7 @@ def seite_markt():
             x="durchschnitt", y="stadt",
             orientation="h",
             color="durchschnitt",
-            color_continuous_scale="Greens",
+            color_continuous_scale=[[0, "#1a7a4a"], [0.5, "#f4a261"], [1, "#d62828"]],
             text_auto=",.0f",
             labels={"durchschnitt": f"Ø Preis ({einheit})", "stadt": "Stadt"},
         )
