@@ -172,7 +172,9 @@ def seite_markt():
     col_links, col_rechts = st.columns(2)
 
     # ── Balkendiagramm: Städtevergleich ──────────────────────────────────────
-    with col_links:
+    # ── Balkendiagramm: Städtevergleich ──────────────────────────────────────
+    col_l, col_m, col_r = st.columns([1, 3, 1])
+    with col_m:
         st.subheader("Durchschnittspreise nach Stadt")
         balken = px.bar(
             agg.sort_values("durchschnitt", ascending=True),
@@ -188,27 +190,25 @@ def seite_markt():
         st.plotly_chart(balken, use_container_width=True)
 
     # ── Scatter Plot: Fläche vs. Preis mit Trendlinie ─────────────────────────
-    with col_rechts:
-        st.subheader("Wohnfläche vs. Preis")
-        scatter = px.scatter(
-            daten, x="flaeche", y="preis",
-            color="stadt", opacity=0.55,
-            labels={"flaeche": "Wohnfläche (m²)", "preis": f"Preis ({einheit})", "stadt": "Stadt"},
-        )
-        # Trendlinie manuell berechnen (ohne externe Abhängigkeit)
-        if len(daten) > 2:
-            x_werte = daten["flaeche"].values
-            y_werte = daten["preis"].values
-            koeffizienten = np.polyfit(x_werte, y_werte, 1)
-            poly = np.poly1d(koeffizienten)
-            x_linie = np.linspace(x_werte.min(), x_werte.max(), 100)
-            scatter.add_trace(go.Scatter(
-                x=x_linie, y=poly(x_linie),
-                mode="lines", name="Trend",
-                line={"color": "#1b5e20", "width": 2, "dash": "dash"},
-            ))
-        scatter.update_layout(legend={"font": {"size": 9}})
-        st.plotly_chart(scatter, use_container_width=True)
+    st.subheader("Wohnfläche vs. Preis")
+    scatter = px.scatter(
+        daten, x="flaeche", y="preis",
+        color="stadt", opacity=0.55,
+        labels={"flaeche": "Wohnfläche (m²)", "preis": f"Preis ({einheit})", "stadt": "Stadt"},
+    )
+    if len(daten) > 2:
+        x_werte = daten["flaeche"].values
+        y_werte = daten["preis"].values
+        koeffizienten = np.polyfit(x_werte, y_werte, 1)
+        poly = np.poly1d(koeffizienten)
+        x_linie = np.linspace(x_werte.min(), x_werte.max(), 100)
+        scatter.add_trace(go.Scatter(
+            x=x_linie, y=poly(x_linie),
+            mode="lines", name="Trend",
+            line={"color": "#1b5e20", "width": 2, "dash": "dash"},
+        ))
+    scatter.update_layout(legend={"font": {"size": 9}})
+    st.plotly_chart(scatter, use_container_width=True)
 
 # ── Seite 3: Meine Immobilien ─────────────────────────────────────────────────
 
