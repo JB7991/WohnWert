@@ -47,9 +47,16 @@ def marktdaten_holen(typ):
 def seite_preisschaetzung():
     st.title("🏠 WertWohn")
     st.markdown("### Schweizer Immobilienpreise einfach schätzen")
-    st.markdown("Gib deine Immobiliendaten ein und erhalte in Sekunden eine realistische Preisschätzung – für Kauf und Miete, kostenlos und ohne Anmeldung.")
+    st.markdown("""Kennst du das? Du interessierst dich für eine Wohnung in Zürich oder Basel – 
+aber weisst nicht ob der Preis fair ist. Makler sind teuer, Vergleichsportale 
+zeigen nur Angebotspreise und niemand gibt dir eine klare Antwort.
+
+**WertWohn löst genau dieses Problem.** Unser Modell analysiert 
+den Schweizer Immobilienmarkt und liefert dir in Sekunden eine realistische 
+Preisschätzung – für Kauf und Miete, kostenlos und ohne Anmeldung.
+    """)
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     col1.metric("Städte", "10 Schweizer Städte")
     col2.metric("Währungen", "CHF · EUR · USD")
     
