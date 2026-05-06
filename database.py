@@ -83,20 +83,20 @@ def _beispieldaten_erstellen(conn):
     for stadt, info in STAEDTE.items():
         for _ in range(50):
             z = random.choice([1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0])
-            f = round(max(25, z * 22 + random.gauss(0, 12)), 1)
+            f = round(max(25, z * 30 + random.gauss(0, 8)), 1)
             s = random.randint(0, 8)
             p = random.randint(0, 1)
             b = random.randint(1950, 2023)
             alter = 2024 - b
 
             # Kaufpreis: Basispreis angepasst nach Fläche, Alter und Parkplatz
-            k = _KAUF[stadt] * (f / 80) * (1 - alter * 0.003) * (1 + p * 0.05)
+            k = _KAUF[stadt] * (f / 80) * (z / 3.5) * (1 - alter * 0.003) * (1 + p * 0.08)
             k *= random.uniform(0.88, 1.12)
             c.execute("INSERT INTO marktdaten VALUES (NULL,?,?,?,?,?,?,?,?,?)",
                       (stadt, info["kanton"], f, z, s, p, b, round(k, -3), "kauf"))
 
             # Mietpreis: analog berechnet
-            m = _MIETE[stadt] * (f / 80) * (1 - alter * 0.001) * (1 + p * 0.04)
+            m = _MIETE[stadt] * (f / 80) * (z / 3.5) * (1 - alter * 0.001) * (1 + p * 0.06)
             m *= random.uniform(0.9, 1.1)
             c.execute("INSERT INTO marktdaten VALUES (NULL,?,?,?,?,?,?,?,?,?)",
                       (stadt, info["kanton"], f, z, s, p, b, round(m, -1), "miete"))
