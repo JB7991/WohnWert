@@ -156,16 +156,15 @@ def seite_markt():
     karte = px.scatter_mapbox(
         agg,
         lat="lat", lon="lon",
-        size="durchschnitt",
         color="durchschnitt",
         hover_name="stadt",
         hover_data={"kanton": True, "durchschnitt": ":,.0f", "anzahl": True, "lat": False, "lon": False},
-        color_continuous_scale="Greens",
-        zoom=6.5, height=430, size_max=42,
+        color_continuous_scale="RdYlGn_r",
+        zoom=6.5, height=430, size_max=20,
         labels={"durchschnitt": f"Ø {einheit}", "anzahl": "Inserate"},
     )
+    karte.update_traces(marker=dict(size=18))
     karte.update_layout(mapbox_style="open-street-map", margin={"l": 0, "r": 0, "t": 0, "b": 0})
-    st.plotly_chart(karte, use_container_width=True)
 
     col_links, col_rechts = st.columns(2)
 
