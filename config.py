@@ -5,10 +5,10 @@ APP_UNTERTITEL = "Schweizer Immobilienpreisschätzer für Kauf & Miete"
 
 # Schweizer Städte mit PLZ, Geokoordinaten, Kanton und Durchschnittseinkommen
 STAEDTE = {
-    "Zürich":            {"plz": "8001", "lat": 47.377, "lon": 8.542,  "kanton": "ZH", "einkommen": 95000},
-    "Bern":              {"plz": "3001", "lat": 46.948, "lon": 7.447,  "kanton": "BE", "einkommen": 78000},
-    "Basel":             {"plz": "4001", "lat": 47.560, "lon": 7.589,  "kanton": "BS", "einkommen": 82000},
-    "Genf":              {"plz": "1200", "lat": 46.204, "lon": 6.143,  "kanton": "GE", "einkommen": 92000},
+    "Zürich":            {"plz": "8000", "lat": 47.377, "lon": 8.542,  "kanton": "ZH", "einkommen": 95000},
+    "Bern":              {"plz": "3000", "lat": 46.948, "lon": 7.447,  "kanton": "BE", "einkommen": 78000},
+    "Basel":             {"plz": "4000", "lat": 47.560, "lon": 7.589,  "kanton": "BS", "einkommen": 82000},
+    "Genf":              {"plz": "1201", "lat": 46.204, "lon": 6.143,  "kanton": "GE", "einkommen": 92000},
     "Lausanne":          {"plz": "1000", "lat": 46.520, "lon": 6.632,  "kanton": "VD", "einkommen": 80000},
     "Zug":               {"plz": "6300", "lat": 47.166, "lon": 8.516,  "kanton": "ZG", "einkommen": 105000},
     "Winterthur":        {"plz": "8400", "lat": 47.501, "lon": 8.724,  "kanton": "ZH", "einkommen": 72000},
