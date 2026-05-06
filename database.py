@@ -42,11 +42,22 @@ def initialisieren():
         )
     conn.commit()
 
-    # Beispieldaten erstellen falls die Tabelle leer ist
-    c.execute("DELETE FROM immobilien")
+    # Separate Tabelle für Marktdaten
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS marktdaten (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            stadt TEXT, kanton TEXT, flaeche REAL, zimmer REAL,
+            stockwerk INTEGER, parkplatz INTEGER, baujahr INTEGER,
+            preis REAL, typ TEXT
+        )
+    """)
     conn.commit()
-    _beispieldaten_erstellen(conn)
+
+    # Marktdaten erstellen falls leer
+    if c.execute("SELECT COUNT(*) FROM marktdaten").fetchone()[0] == 0:
+        _beispieldaten_erstellen(conn)
     conn.close()
+
 
 # Basis-Kaufpreise und Mietpreise pro Stadt (synthetische Marktdaten)
 _KAUF = {
@@ -65,7 +76,7 @@ def _beispieldaten_erstellen(conn):
     random.seed(42)
     c = conn.cursor()
     for stadt, info in STAEDTE.items():
-        for _ in range(1):
+        for _ in range(50):
             z = random.choice([1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0])
             f = round(max(25, z * 22 + random.gauss(0, 12)), 1)
             s = random.randint(0, 8)
@@ -76,7 +87,7 @@ def _beispieldaten_erstellen(conn):
             # Kaufpreis: Basispreis angepasst nach Fläche, Alter und Parkplatz
             k = _KAUF[stadt] * (f / 80) * (1 - alter * 0.003) * (1 + p * 0.05)
             k *= random.uniform(0.88, 1.12)
-            c.execute("INSERT INTO immobilien VALUES (NULL,?,?,?,?,?,?,?,?,?)",
+            c.execute("INSERT INTO marktdaten VALUES (NULL,?,?,?,?,?,?,?,?,?)",
                       (stadt, info["kanton"], f, z, s, p, b, round(k, -3), "kauf"))
 
             # Mietpreis: analog berechnet
@@ -100,6 +111,16 @@ def stadtdaten_laden():
     # Stadtkoordinaten und Wirtschaftsdaten laden
     conn = verbindung()
     df = pd.read_sql("SELECT * FROM stadtdaten", conn)
+    conn.close()
+    return df
+
+def marktdaten_laden(typ=None):
+    # Marktdaten für die Marktübersicht laden
+    conn = verbindung()
+    if typ:
+        df = pd.read_sql("SELECT * FROM marktdaten WHERE typ=?", conn, params=(typ,))
+    else:
+        df = pd.read_sql("SELECT * FROM marktdaten", conn)
     conn.close()
     return df
 
