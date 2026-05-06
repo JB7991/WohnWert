@@ -169,7 +169,7 @@ def seite_markt():
     karte.update_layout(mapbox_style="open-street-map", margin={"l": 0, "r": 0, "t": 0, "b": 0})
     st.plotly_chart(karte, use_container_width=True)
     
-
+    col_links, col_rechts = st.columns(2)
 
     # ── Balkendiagramm: Städtevergleich ──────────────────────────────────────
     with col_links:
