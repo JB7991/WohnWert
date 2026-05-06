@@ -51,8 +51,7 @@ def seite_preisschaetzung():
     
     col1, col2, col3 = st.columns(3)
     col1.metric("Städte", "10 Schweizer Städte")
-    col2.metric("Modell", "Random Forest ML")
-    col3.metric("Währungen", "CHF · EUR · USD")
+    col2.metric("Währungen", "CHF · EUR · USD")
     
     st.markdown("---")
 
