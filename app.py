@@ -17,6 +17,9 @@ st.set_page_config(page_title=APP_NAME, page_icon="🏠", layout="wide")
 # ── Initialisierung beim ersten Start ─────────────────────────────────────────
 if "gestartet" not in st.session_state:
     database.initialisieren()           # Datenbank und Beispieldaten aufsetzen
+    daten_holen.clear()
+    alle_daten_holen.clear()
+    stadtdaten_holen.clear()
     ml_model.alle_trainieren()          # Random-Forest-Modelle trainieren
     # Koordinaten im Hintergrund über Nominatim API aktualisieren
     st.session_state["gestartet"] = True
