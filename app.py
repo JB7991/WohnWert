@@ -207,7 +207,7 @@ def seite_markt():
             mode="lines", name="Trend",
             line={"color": "#1b5e20", "width": 2, "dash": "dash"},
         ))
-    scatter.update_layout(legend={"font": {"size": 9}})
+    scatter.update_layout(legend={"font": {"size": 20}})
     st.plotly_chart(scatter, use_container_width=True)
 
 # ── Seite 3: Meine Immobilien ─────────────────────────────────────────────────
